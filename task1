@@ -1,0 +1,40 @@
+class Task:
+    def __init__(self, description, priority=1):
+        self.description = description
+        self.priority = priority
+
+    def __str__(self):
+        return f"{self.description} (Priority: {self.priority})"
+
+class TaskManager:
+    def __init__(self):
+        self.tasks = []
+
+    def add_task(self, description, priority=1):
+        task = Task(description, priority)
+        self.tasks.append(task)
+
+    def remove_task(self, description):
+        self.tasks = [task for task in self.tasks if task.description != description]
+
+    def list_tasks(self):
+        return sorted(self.tasks, key=lambda x: x.priority, reverse=True)
+
+    def recommend_task(self):
+        if not self.tasks:
+            return "No tasks available"
+        # Simple recommendation: return the highest priority task
+        return max(self.tasks, key=lambda x: x.priority)
+
+# Usage Example
+task_manager = TaskManager()
+task_manager.add_task("Buy groceries", 2)
+task_manager.add_task("Write blog post", 3)
+task_manager.add_task("Do laundry", 1)
+
+print("All tasks:")
+for task in task_manager.list_tasks():
+    print(task)
+
+print("\nRecommended task:")
+print(task_manager.recommend_task())
